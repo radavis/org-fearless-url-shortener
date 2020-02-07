@@ -26,7 +26,13 @@ public class ShortURLController {
 
     @GetMapping("/{shortCode}")
     public ResponseEntity redirectToURL(@PathVariable("shortCode") String shortCode) {
-        ShortURL shortURL = shortURLService.expandShortCode(shortCode);
+        ShortURL shortURL;
+        try {
+            shortURL = shortURLService.expandShortCode(shortCode);
+        } catch (ShortCodeNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+
         return ResponseEntity.status(HttpStatus.FOUND)
             .location(shortURL.getUri())
             .build();

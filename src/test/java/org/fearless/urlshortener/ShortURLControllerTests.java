@@ -52,10 +52,10 @@ public class ShortURLControllerTests {
 
     @Test
     public void shouldShowJSONInfo() throws Exception {
-        URI uri = URI.create("http://example.com");
+        URI uri = URI.create("http://example.org");
         ShortURL shortUrl = new ShortURL(uri, "example");
         given(this.shortURLService.expandShortCode("example")).willReturn(shortUrl);
-        mvc.perform(get("/example/info").accept(MediaType.APPLICATION_JSON))
+        mvc.perform(get("/example.json").accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
             .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
             .andExpect(jsonPath("$.shortCode").value("example"))

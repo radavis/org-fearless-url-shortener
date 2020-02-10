@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.on;
-
 @Controller
 public class ShortURLController {
 
@@ -25,7 +23,7 @@ public class ShortURLController {
     }
 
     @GetMapping("/{shortCode}")
-    public ResponseEntity redirectToURL(@PathVariable("shortCode") String shortCode) {
+    public ResponseEntity<?> redirectToURL(@PathVariable("shortCode") String shortCode) {
         ShortURL shortURL;
         try {
             shortURL = shortURLService.expandShortCode(shortCode);
@@ -38,8 +36,14 @@ public class ShortURLController {
             .build();
     }
 
+    @GetMapping("/{shortCode}.json")
+    @ResponseBody
+    public ShortURL getShortURLJson(@PathVariable("shortCode") String shortCode) {
+        return shortURLService.expandShortCode(shortCode);
+    }
+
     @PostMapping("/")
-    public ResponseEntity shortenURL(@RequestParam URI uri) {
+    public ResponseEntity<?> shortenURL(@RequestParam URI uri) {
         ShortURL shortURL = shortURLService.shortenURL(uri);
         URI shortenedURL = URI.create("http://localhost:8080/" + shortURL.getShortCode());
         return ResponseEntity.created(shortenedURL).build();

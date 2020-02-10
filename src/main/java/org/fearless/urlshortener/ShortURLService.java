@@ -2,7 +2,6 @@ package org.fearless.urlshortener;
 
 import java.net.URI;
 import java.util.Random;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,9 +10,9 @@ import org.springframework.util.Assert;
 @Service
 public class ShortURLService {
 
-    private static final String SPACE = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_";
+    private static final String ALPHABET = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_";
 
-    private static final int BASE = SPACE.length();
+    private static final int BASE = ALPHABET.length();
 
     private ShortURLRepository shortURLRepository;
 
@@ -53,7 +52,7 @@ public class ShortURLService {
         Assert.isTrue(num > 0, "Number must be positive");
         StringBuilder str = new StringBuilder();
         while (num > 0) {
-            str.insert(0, SPACE.charAt(num % BASE));
+            str.insert(0, ALPHABET.charAt(num % BASE));
             num = num / BASE;
         }
         return str.toString();

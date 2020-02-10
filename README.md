@@ -19,6 +19,12 @@ $ unzip url-shortener.zip
 $ rm url-shortener.zip
 ```
 
+## Test it
+
+```
+$ ./mvnw clean test
+```
+
 ## Start it
 
 ```

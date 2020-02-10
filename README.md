@@ -29,8 +29,9 @@ $ ./mvnw clean test
 
 ```
 $ ./mvnw spring-boot:run
-$ open http://localhost:8080
-$ curl http://localhost:8080
+$ curl -d uri=http://your-url.org http://localhost:8080/ -v
+$ curl http://localhost:8080/short-url
+$ curl http://localhost:8080/short-url.json
 ```
 
 ## Do More @
